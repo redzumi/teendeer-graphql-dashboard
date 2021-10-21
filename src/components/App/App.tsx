@@ -14,9 +14,9 @@ function App() {
         </p>
       </header>
       <div className="App-body">
-        <NotesList />
-        <Divider />
         <Note />
+        <Divider />
+        <NotesList />
       </div>
     </div>
   );

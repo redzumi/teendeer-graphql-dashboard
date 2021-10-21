@@ -15,7 +15,11 @@ const NotesList = () => {
 
   return (
     <Spin spinning={status === 'loading'}>
-      <Space size={24}>
+      <Space
+        size={24}
+        wrap={true}
+        align="center"
+        style={{ justifyContent: 'center ' }}>
         {notes.map((note) => (
           <Card key={note.title} title={note.title}>
             {note.body}

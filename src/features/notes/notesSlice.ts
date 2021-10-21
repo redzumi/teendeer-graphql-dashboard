@@ -41,8 +41,7 @@ export const notesSlice = createSlice({
       })
       .addCase(createNote.fulfilled, (state, action) => {
         state.status = 'idle';
-        // state.list.push(action.payload);
-        add(action.payload);
+        state.list.push(action.payload);
       })
       // looks like middleware?
       .addMatcher(isRejectedAction, (state, action) => {

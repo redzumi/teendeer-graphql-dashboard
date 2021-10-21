@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { add, createNoteAndAdd, Note, selectNotesStatus } from './notesSlice';
+import { createNote, Note, selectNotesStatus } from './notesSlice';
 import { useAppDispatch, useAppSelector } from '../../tools/hooks';
 
 const Notes = () => {
@@ -19,12 +19,7 @@ const Notes = () => {
 
   const handleSubmit = () => {
     const note = form.getFieldsValue();
-    dispatch(add(note));
-  };
-
-  const handleSubmitAsync = () => {
-    const note = form.getFieldsValue();
-    dispatch(createNoteAndAdd(note));
+    dispatch(createNote(note));
   };
 
   return (
@@ -36,8 +31,7 @@ const Notes = () => {
         <FormItem name="body" label="Body for note">
           <Input.TextArea />
         </FormItem>
-        <Button onClick={handleSubmit}>Submit</Button>
-        <Button onClick={handleSubmitAsync}>Submit Async</Button>
+        <Button onClick={handleSubmit}>Add new note</Button>
       </Form>
     </Spin>
   );
