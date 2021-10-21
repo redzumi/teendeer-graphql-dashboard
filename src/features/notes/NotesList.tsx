@@ -1,43 +1,28 @@
 import React, { useEffect } from 'react';
 import { Card, Space, message, Spin } from 'antd';
-import { gql, useQuery, useSubscription } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Note } from './notesSlice';
 
-// const GET_NOTES = gql`
-//   query GetNotes {
-//     notes {
-//       id
-//       title
-//     }
-//   }
-// `;
-
-const NOTES_SUBSCRIPTION = gql`
-  subscription noteAdded {
-    noteAdded {
+const GET_NOTES = gql`
+  query GetNotes {
+    notes {
+      id
       title
-      body
     }
   }
 `;
 
 const NotesList = () => {
-  // const { loading, error, data } = useQuery(GET_NOTES, {
-  //   variables: {},
-  //   pollInterval: 5000
-  // });
-
-  // useEffect(() => {
-  //   if (error) message.error('Request failed');
-  // }, [error]);
-  const { data, loading } = useSubscription(NOTES_SUBSCRIPTION, {
+  const { loading, error, data } = useQuery(GET_NOTES, {
     variables: {},
   });
 
+  useEffect(() => {
+    if (error) message.error('Request failed');
+  }, [error]);
+
   return (
     <Spin spinning={loading}>
-      {`${loading}`}
-      {JSON.stringify(data)}
       <Space
         size={24}
         wrap={true}

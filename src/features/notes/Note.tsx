@@ -5,6 +5,15 @@ import FormItem from 'antd/lib/form/FormItem';
 import { Note } from './notesSlice';
 import { gql, useMutation } from '@apollo/client';
 
+const GET_NOTES = gql`
+  query GetNotes {
+    notes {
+      id
+      title
+    }
+  }
+`;
+
 const ADD_NOTE = gql`
   mutation addNote($title: String!, $body: String!) {
     addNote(title: $title, body: $body) {
@@ -16,7 +25,9 @@ const ADD_NOTE = gql`
 `;
 
 const Notes = () => {
-  const [addNote, { loading }] = useMutation(ADD_NOTE);
+  const [addNote, { loading }] = useMutation(ADD_NOTE, {
+    refetchQueries: [{ query: GET_NOTES }],
+  });
   const [form] = useForm<Note>();
 
   const handleSubmit = () => {

@@ -1,9 +1,11 @@
 import React from 'react';
+import { Divider } from 'antd';
+import LastNote from '../../features/notes/LastNote';
+
 import NotesList from '../../features/notes/NotesList';
 import Note from '../../features/notes/Note';
 
 import './App.less';
-import { Divider } from 'antd';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       </header>
       <div className="App-body">
         <Note />
+        <Divider />
+        <LastNote />
         <Divider />
         <NotesList />
       </div>
