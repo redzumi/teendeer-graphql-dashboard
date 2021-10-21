@@ -1,29 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { createNote, Note, selectNotesStatus } from './notesSlice';
-import { useAppDispatch, useAppSelector } from '../../tools/hooks';
+import { Note } from './notesSlice';
+import { gql, useMutation } from '@apollo/client';
+
+const ADD_NOTE = gql`
+  mutation addNote($title: String!, $body: String!) {
+    addNote(title: $title, body: $body) {
+      title
+      body
+    }
+  }
+`;
 
 const Notes = () => {
-  const status = useAppSelector(selectNotesStatus);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (status === 'failed') {
-      message.error('Request failed');
-    }
-  }, [status]);
-
+  const [addNote, { loading }] = useMutation(ADD_NOTE);
   const [form] = useForm<Note>();
 
   const handleSubmit = () => {
     const note = form.getFieldsValue();
-    dispatch(createNote(note));
+    addNote({ variables: note }).catch((error) => message.error(error.message));
   };
 
   return (
-    <Spin spinning={status === 'loading'}>
+    <Spin spinning={loading}>
       <Form name="form" form={form}>
         <FormItem name="title" label="Title for note">
           <Input />
