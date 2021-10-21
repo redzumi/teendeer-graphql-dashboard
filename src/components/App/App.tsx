@@ -6,6 +6,7 @@ import NotesList from '../../features/notes/NotesList';
 import Note from '../../features/notes/Note';
 
 import './App.less';
+import UserForm from '../../features/user/UserForm';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         </p>
       </header>
       <div className="App-body">
+        <UserForm />
+        <Divider plain={true} />
         <Note />
         <Divider />
         <LastNote />
