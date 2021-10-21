@@ -8,6 +8,7 @@ import { gql, useMutation } from '@apollo/client';
 const ADD_NOTE = gql`
   mutation addNote($title: String!, $body: String!) {
     addNote(title: $title, body: $body) {
+      id
       title
       body
     }
