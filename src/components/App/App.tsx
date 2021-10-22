@@ -1,12 +1,13 @@
 import React from 'react';
 import { Divider } from 'antd';
-import LastNote from '../../features/notes/LastNote';
 
+import UserForm from '../../features/user/UserForm';
+import CurrentUser from '../../features/user/CurrentUser';
+import LastNote from '../../features/notes/LastNote';
 import NotesList from '../../features/notes/NotesList';
 import Note from '../../features/notes/Note';
 
 import './App.less';
-import UserForm from '../../features/user/UserForm';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         </p>
       </header>
       <div className="App-body">
+        <CurrentUser />
         <UserForm />
         <Divider plain={true} />
         <Note />
