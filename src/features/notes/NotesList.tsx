@@ -18,7 +18,7 @@ const NotesList = () => {
   });
 
   useEffect(() => {
-    if (error) message.error('Request failed');
+    if (error) message.error(error.message);
   }, [error]);
 
   return (

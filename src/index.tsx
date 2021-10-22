@@ -10,17 +10,22 @@ import { bootstrap } from './vendors';
 
 import './index.less';
 
-const link = new WebSocketLink({
+// https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTcxOTFiMmIwNmY2MzcxYzBlNjBkMGIiLCJuYW1lIjoiVGVzdHVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.ilxpD1z0KMj63-iDfFNrU9NYKpkOzBjFf4-ihJZgC1s
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTcxOTFiMmIwNmY2MzcxYzBlNjBkMGIiLCJuYW1lIjoiVGVzdHVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.ilxpD1z0KMj63-iDfFNrU9NYKpkOzBjFf4-ihJZgC1s';
+const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: {
     reconnect: true,
+    connectionParams: {
+      authToken: token,
+    },
   },
 });
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  link,
+  link: wsLink,
   cache: new InMemoryCache(),
+  credentials: 'include',
 });
 
 // TODO: remove store?
