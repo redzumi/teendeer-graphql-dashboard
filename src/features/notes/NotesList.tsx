@@ -3,19 +3,18 @@ import { Card, Space, message, Spin } from 'antd';
 import { gql, useQuery } from '@apollo/client';
 import { Note } from './notesSlice';
 
-const GET_NOTES = gql`
-  query GetNotes {
-    notes {
-      id
+const NOTE_MANY = gql`
+  query noteMany {
+    noteMany {
+      _id
       title
+      body
     }
   }
 `;
 
 const NotesList = () => {
-  const { loading, error, data } = useQuery(GET_NOTES, {
-    variables: {},
-  });
+  const { loading, error, data } = useQuery(NOTE_MANY);
 
   useEffect(() => {
     if (error) message.error(error.message);
@@ -28,7 +27,7 @@ const NotesList = () => {
         wrap={true}
         align="center"
         style={{ justifyContent: 'center ' }}>
-        {data?.notes?.map((note: Note) => (
+        {data?.noteMany?.map((note: Note) => (
           <Card key={note.title} title={note.title}>
             {note.body}
           </Card>

@@ -3,6 +3,7 @@ import { AppThunk, RootState } from "../../tools/store";
 import { createNoteOnServer } from "./notesApi";
 
 export type Note = {
+  _id: string;
   title: string;
   body: string;
 };

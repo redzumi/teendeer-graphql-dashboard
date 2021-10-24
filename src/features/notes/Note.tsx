@@ -5,34 +5,40 @@ import FormItem from 'antd/lib/form/FormItem';
 import { Note } from './notesSlice';
 import { gql, useMutation } from '@apollo/client';
 
-const GET_NOTES = gql`
-  query GetNotes {
-    notes {
-      id
-      title
-    }
-  }
-`;
-
-const ADD_NOTE = gql`
-  mutation addNote($title: String!, $body: String!) {
-    addNote(title: $title, body: $body) {
-      id
+const NOTE_MANY = gql`
+  query noteMany {
+    noteMany {
+      _id
       title
       body
     }
   }
 `;
 
+const NOTE_CREATE_ONE = gql`
+  mutation noteCreateOne($record: CreateOneNoteInput!) {
+    noteCreateOne(record: $record) {
+      record {
+        body
+        title
+      }
+    }
+  }
+`;
+
 const Notes = () => {
-  const [addNote, { loading }] = useMutation(ADD_NOTE, {
-    refetchQueries: [{ query: GET_NOTES }],
-  });
   const [form] = useForm<Note>();
+  const [noteCreateOne, { loading }] = useMutation(NOTE_CREATE_ONE, {
+    refetchQueries: [{ query: NOTE_MANY }],
+  });
 
   const handleSubmit = () => {
-    const note = form.getFieldsValue();
-    addNote({ variables: note }).catch((error) => message.error(error.message));
+    const record = form.getFieldsValue();
+    noteCreateOne({
+      variables: {
+        record,
+      },
+    }).catch((error) => message.error(error.message));
   };
 
   return (

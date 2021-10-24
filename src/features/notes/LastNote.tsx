@@ -5,53 +5,51 @@ import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
 import { Note } from './notesSlice';
 
-const GET_NOTES = gql`
-  query GetNotes {
-    notes {
-      id
+const NOTE_MANY = gql`
+  query noteMany {
+    noteMany {
+      _id
       title
+      body
     }
   }
 `;
 
-const NOTES_SUBSCRIPTION = gql`
+const NOTE_ADDED = gql`
   subscription noteAdded {
     noteAdded {
-      id
+      _id
       title
       body
     }
   }
 `;
 
-const EDIT_NOTE = gql`
-  mutation editNote($id: String!, $title: String!, $body: String!) {
-    editNote(id: $id, title: $title, body: $body) {
-      id
-      title
-      body
+const NOTE_UPDATE_BY_ID = gql`
+  mutation noteUpdateById($id: MongoID!, $record: UpdateByIdNoteInput!) {
+    noteUpdateById(_id: $id, record: $record) {
+      recordId
     }
   }
 `;
 
 const LastNote = () => {
-  const [editNote, { loading }] = useMutation(EDIT_NOTE, {
-    refetchQueries: [{ query: GET_NOTES }],
-  });
-
-  const { data } = useSubscription(NOTES_SUBSCRIPTION, {
-    variables: {},
-  });
-
-  const currentNote = data?.noteAdded;
-
+  const { data } = useSubscription(NOTE_ADDED);
   const [form] = useForm<Note>();
 
+  const currentNote: Note = data?.noteAdded;
+  const [noteUpdateById, { loading }] = useMutation(NOTE_UPDATE_BY_ID, {
+    refetchQueries: [{ query: NOTE_MANY }],
+  });
+
   const handleSubmit = () => {
-    const note = form.getFieldsValue();
-    editNote({ variables: { id: currentNote.id, ...note } }).catch((error) =>
-      message.error(error.message)
-    );
+    const record = form.getFieldsValue();
+    noteUpdateById({
+      variables: {
+        id: currentNote._id,
+        record,
+      },
+    }).catch((error) => message.error(error.message));
   };
 
   if (currentNote) {

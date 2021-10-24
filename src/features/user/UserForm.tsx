@@ -14,38 +14,25 @@ type User = {
   };
 };
 
-const GET_USERS = gql`
-  query userMany {
-    userMany {
-      _id
-      firstName
-    }
-  }
-`;
-
 const CREATE_USER = gql`
-  mutation userCreateOne(
-    $firstName: String!
-    $secondName: String!
-    $login: String!
-  ) {
-    userCreateOne(
-      record: { firstName: $firstName, secondName: $secondName, login: $login }
-    ) {
-      recordId
+  mutation userCreateOne($record: CreateOneUserInput!) {
+    userCreateOne(record: $record) {
+      record {
+        login
+        firstName
+        secondName
+      }
     }
   }
 `;
 
 const UserForm = () => {
-  const [createUser, { loading }] = useMutation(CREATE_USER, {
-    refetchQueries: [{ query: GET_USERS }],
-  });
+  const [createUser, { loading }] = useMutation(CREATE_USER);
   const [form] = useForm<User>();
 
   const handleSubmit = () => {
-    const user = form.getFieldsValue();
-    createUser({ variables: user }).catch((error) =>
+    const record = form.getFieldsValue();
+    createUser({ variables: { record } }).catch((error) =>
       message.error(error.message)
     );
   };
