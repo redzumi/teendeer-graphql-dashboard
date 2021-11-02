@@ -32,8 +32,6 @@ const SingleStep = ({ current }: Props) => {
   const params = useParams<{ taskId: string }>();
   const { taskId } = params;
 
-  console.log(params);
-
   const [updateStep, { loading: updateLoading }] = useMutation(UPDATE_STEP, {
     refetchQueries: [{ query: STEP_BY_TASK, variables: { taskId } }],
   });

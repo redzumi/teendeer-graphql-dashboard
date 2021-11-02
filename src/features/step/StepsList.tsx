@@ -38,7 +38,7 @@ const StepsList = () => {
           <SingleStep key={current?._id} current={current} />
         ) : (
           <React.Fragment>
-            <Button onClick={handleCreate}>Create new</Button>
+            {challengeId && <Button onClick={handleCreate}>Create new</Button>}
             {data?.stepsByTask?.map((step: Step) => (
               <Card
                 key={step._id}
