@@ -9,11 +9,11 @@ import SingleChallenge from '../features/challenge/SingleChallenge';
 import ChallengesList from '../features/challenge/ChallengesList';
 
 const Challenges = () => {
-  const { id } = useParams<{ id: string }>();
+  const { challengeId } = useParams<{ challengeId: string }>();
   const { loading, error, data } = useQuery(CHALLENGE_MANY);
 
   const current = data?.challengeMany.find(
-    (challenge: Challenge) => challenge._id === id
+    (challenge: Challenge) => challenge._id === challengeId
   );
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Challenges = () => {
   return (
     <Spin spinning={loading}>
       <Card>
-        {current || id === 'new' ? (
+        {current || challengeId === 'new' ? (
           <SingleChallenge key={current?._id} current={current} />
         ) : (
           <ChallengesList challenges={data?.challengeMany} />

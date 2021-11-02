@@ -35,16 +35,21 @@ const Routes = () => {
         <Route path="/me">
           <User />
         </Route>
-        <Route path={['/talents/:id', '/talents']}>
+        <Route path={['/talents/:talentId', '/talents']}>
           <Talents />
         </Route>
-        <Route path={['/challenges/:id', '/challenges']}>
+        <Route
+          path={[
+            '/challenges/:challengeId/:taskId',
+            '/challenges/:challengeId',
+            '/challenges',
+          ]}>
           <Challenges />
         </Route>
-        <Route path={['/tasks/:id', '/tasks']}>
+        <Route path={['/tasks/:taskId/:stepId', '/tasks']}>
           <Tasks />
         </Route>
-        <Route path={['/steps/:id', '/steps']}>
+        <Route path={['/steps/:stepId', '/steps']}>
           <Steps />
         </Route>
       </Switch>

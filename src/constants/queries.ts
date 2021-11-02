@@ -21,9 +21,9 @@ query challengeMany {
 }
 `;
 
-export const TASK_MANY = gql`
-query taskMany {
-  taskMany {
+export const TASK_BY_CHALLENGE = gql`
+query taskByChallenge($challengeId: String) {
+  tasksByChallenge(challengeId: $challengeId) {
     _id
     name
     description

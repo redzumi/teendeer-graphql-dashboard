@@ -4,7 +4,8 @@ import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
 import { gql, useMutation } from '@apollo/client';
 
-import { TASK_MANY } from '../../constants/queries';
+import { TASK_BY_CHALLENGE } from '../../constants/queries';
+import { useParams } from 'react-router-dom';
 
 type Props = {
   current?: Task;
@@ -28,13 +29,15 @@ const CREATE_TASK = gql`
 
 const SingleTask = ({ current }: Props) => {
   const [form] = useForm<Task>();
+  const params = useParams<{ taskId: string; challengeId: string }>();
+  const { challengeId } = params;
 
   const [updateTask, { loading: updateLoading }] = useMutation(UPDATE_TASK, {
-    refetchQueries: [{ query: TASK_MANY }],
+    refetchQueries: [{ query: TASK_BY_CHALLENGE, variables: { challengeId } }],
   });
 
   const [createTask, { loading: createLoading }] = useMutation(CREATE_TASK, {
-    refetchQueries: [{ query: TASK_MANY }],
+    refetchQueries: [{ query: TASK_BY_CHALLENGE, variables: { challengeId } }],
   });
 
   const handleSubmit = () => {
@@ -58,7 +61,7 @@ const SingleTask = ({ current }: Props) => {
 
   return (
     <Spin spinning={updateLoading || createLoading}>
-      <Form name="form" form={form} initialValues={current}>
+      <Form name="form" form={form} initialValues={current || { challengeId }}>
         <FormItem name="name" label="Task name">
           <Input />
         </FormItem>

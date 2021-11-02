@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, message, Spin } from 'antd';
+import { Button, Card, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
 import { CHALLENGE_MANY, TALENT_MANY } from '../../constants/queries';
 import TalentsSelect from './TalentsSelect';
+import TasksList from '../task/TasksList';
 
 type Props = {
   current?: Challenge;
@@ -93,6 +94,9 @@ const SingleChallenge = ({ current }: Props) => {
           {current ? 'Update challenge' : 'Create challenge'}
         </Button>
       </Form>
+      <Card>
+        <TasksList />
+      </Card>
     </Spin>
   );
 };

@@ -1,40 +1,55 @@
 import { useQuery } from '@apollo/client';
 import { Spin, Space, Card, message, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-import { TASK_MANY } from '../../constants/queries';
+import { TASK_BY_CHALLENGE } from '../../constants/queries';
 import SingleTask from './SingleTask';
 
 const TasksList = () => {
-  const [current, setCurrent] = useState<Task | undefined>();
-  const { loading, error, data } = useQuery(TASK_MANY);
+  const history = useHistory();
+
+  const params = useParams<{ taskId: string; challengeId: string }>();
+  const { challengeId, taskId } = params;
+
+  const { loading, error, data } = useQuery(TASK_BY_CHALLENGE, {
+    variables: { challengeId },
+  });
+
+  const current = data?.tasksByChallenge.find(
+    (task: Task) => task._id === taskId
+  );
 
   useEffect(() => {
     if (error) message.error(error.message);
   }, [error]);
 
   const handleClick = (task: Task) => () => {
-    setCurrent(task);
+    history.push(`/challenges/${challengeId}/${task._id}`);
   };
 
   const handleCreate = () => {
-    setCurrent(undefined);
+    history.push(`/challenges/${challengeId}/new`);
   };
 
   return (
     <Spin spinning={loading}>
-      <SingleTask key={current?._id} current={current} />
-      <Button onClick={handleCreate}>Create new</Button>
-      <Space
-        size={24}
-        wrap={true}
-        align="center"
-        style={{ justifyContent: 'center ' }}>
-        {data?.taskMany?.map((task: Task) => (
-          <Card key={task._id} title={task.name} onClick={handleClick(task)}>
-            {task.description}
-          </Card>
-        ))}
+      <Space size={24} wrap={true} style={{ justifyContent: 'center ' }}>
+        {current || taskId === 'new' ? (
+          <SingleTask key={current?._id} current={current} />
+        ) : (
+          <React.Fragment>
+            <Button onClick={handleCreate}>Create new</Button>
+            {data?.tasksByChallenge?.map((task: Task) => (
+              <Card
+                key={task._id}
+                title={task.name}
+                onClick={handleClick(task)}>
+                {task.description}
+              </Card>
+            ))}
+          </React.Fragment>
+        )}
       </Space>
     </Spin>
   );
