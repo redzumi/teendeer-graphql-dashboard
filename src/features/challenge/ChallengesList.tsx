@@ -1,45 +1,38 @@
-import { useQuery } from '@apollo/client';
-import { Spin, Space, Card, message, Button } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Space, Card, Button } from 'antd';
+import { useHistory } from 'react-router-dom';
 
-import { CHALLENGE_MANY } from '../../constants/queries';
-import SingleChallenge from './SingleChallenge';
+type Props = {
+  challenges: Challenge[];
+};
 
-const ChallengesList = () => {
-  const [current, setCurrent] = useState<Challenge | undefined>();
-  const { loading, error, data } = useQuery(CHALLENGE_MANY);
-
-  useEffect(() => {
-    if (error) message.error(error.message);
-  }, [error]);
+const ChallengesList = ({ challenges }: Props) => {
+  const history = useHistory();
 
   const handleClick = (challenge: Challenge) => () => {
-    setCurrent(challenge);
+    history.push(`/challenges/${challenge._id}`);
   };
 
   const handleCreate = () => {
-    setCurrent(undefined);
+    history.push(`/challenges/new`);
   };
 
   return (
-    <Spin spinning={loading}>
-      <SingleChallenge key={current?._id} current={current} />
+    <Space
+      size={24}
+      wrap={true}
+      align="center"
+      style={{ justifyContent: 'center ' }}>
+      {challenges?.map((challenge: Challenge) => (
+        <Card
+          key={challenge._id}
+          title={challenge.name}
+          onClick={handleClick(challenge)}>
+          {challenge.description}
+        </Card>
+      ))}
       <Button onClick={handleCreate}>Create new</Button>
-      <Space
-        size={24}
-        wrap={true}
-        align="center"
-        style={{ justifyContent: 'center ' }}>
-        {data?.challengeMany?.map((challenge: Challenge) => (
-          <Card
-            key={challenge._id}
-            title={challenge.name}
-            onClick={handleClick(challenge)}>
-            {challenge.description}
-          </Card>
-        ))}
-      </Space>
-    </Spin>
+    </Space>
   );
 };
 
