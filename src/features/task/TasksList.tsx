@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { TASK_BY_CHALLENGE } from '../../constants/queries';
+import StepsList from '../step/StepsList';
 import SingleTask from './SingleTask';
 
 const TasksList = () => {
@@ -51,6 +52,9 @@ const TasksList = () => {
           </React.Fragment>
         )}
       </Space>
+      <Card>
+        <StepsList />
+      </Card>
     </Spin>
   );
 };

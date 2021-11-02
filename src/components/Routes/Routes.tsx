@@ -40,6 +40,7 @@ const Routes = () => {
         </Route>
         <Route
           path={[
+            '/challenges/:challengeId/:taskId/:stepId',
             '/challenges/:challengeId/:taskId',
             '/challenges/:challengeId',
             '/challenges',

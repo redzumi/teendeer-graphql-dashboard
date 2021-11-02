@@ -26,5 +26,12 @@ type Task = {
   _id: string;
   name: string;
   description: string;
-  challenge: string;
+  challengeId: string;
+};
+
+type Step = {
+  _id: string;
+  name: string;
+  description: string;
+  taskId: string;
 };

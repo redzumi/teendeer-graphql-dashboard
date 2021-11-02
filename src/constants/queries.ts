@@ -31,3 +31,14 @@ query taskByChallenge($challengeId: String) {
   }
 }
 `;
+
+export const STEP_BY_TASK = gql`
+query stepsByTask($taskId: String) {
+  stepsByTask(taskId: $taskId) {
+    _id
+    name
+    description
+    taskId
+  }
+}
+`;
