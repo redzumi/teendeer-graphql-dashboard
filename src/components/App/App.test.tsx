@@ -10,5 +10,5 @@ beforeEach(async () => {
 test('renders learn react link', () => {
   const { getByText } = render(<App />);
 
-  expect(getByText(/learn/i)).toBeInTheDocument();
+  expect(getByText(/graphql/i)).toBeInTheDocument();
 });
