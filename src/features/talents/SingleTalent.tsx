@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, message, Spin } from 'antd';
+import { Button, Form, Input, message, Space, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
 import { useMutation } from '@apollo/client';
@@ -45,7 +45,7 @@ const SingleTalent = ({ current, onRemove }: Props) => {
       variables: {
         talentId: current?._id,
       },
-      update: onRemove
+      update: onRemove,
     });
   };
 
@@ -70,21 +70,26 @@ const SingleTalent = ({ current, onRemove }: Props) => {
 
   return (
     <Spin spinning={updateLoading || createLoading || removeLoading}>
-      <Form name="form" form={form} initialValues={current}>
+      <Form name="form" form={form} initialValues={current} layout="vertical">
+        <FormItem name="_id" label="Talent ID">
+          <Input disabled />
+        </FormItem>
         <FormItem name="name" label="Talent name">
           <Input />
         </FormItem>
         <FormItem name="tag" label="Talent tag">
           <Input.TextArea />
         </FormItem>
-        <Button onClick={handleSubmit}>
-          {current ? 'Update talent' : 'Create talent'}
-        </Button>
-        {current && (
-          <Button onClick={handleRemove} type="dashed" danger>
-            Remove talent
+        <Space>
+          <Button onClick={handleSubmit}>
+            {current ? 'Update talent' : 'Create talent'}
           </Button>
-        )}
+          {current && (
+            <Button onClick={handleRemove} type="dashed" danger>
+              Remove talent
+            </Button>
+          )}
+        </Space>
       </Form>
     </Spin>
   );

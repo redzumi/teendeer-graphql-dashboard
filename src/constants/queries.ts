@@ -149,3 +149,25 @@ mutation talentRemove($talentId: MongoID!) {
     recordId
   }
 }`;
+
+export const CHALLENGE_REMOVE = gql`
+mutation challengeRemove($challengeId: MongoID!) {
+  challengeRemoveById(_id: $challengeId) {
+    recordId
+  }
+}`;
+
+
+export const TASK_REMOVE = gql`
+mutation taskRemove($taskId: MongoID!) {
+  taskRemoveById(_id: $taskId) {
+    recordId
+  }
+}`;
+
+export const STEP_REMOVE = gql`
+mutation stepRemove($stepId: MongoID!) {
+  stepRemoveById(_id: $stepId) {
+    recordId
+  }
+}`;

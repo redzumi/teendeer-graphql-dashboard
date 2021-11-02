@@ -1,10 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { Spin, Space, Card, message, Button } from 'antd';
+import { Spin, Card, message, Button, List } from 'antd';
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { TASK_BY_CHALLENGE } from '../../constants/queries';
-import StepsList from '../step/StepsList';
 import SingleTask from './SingleTask';
 
 const TasksList = () => {
@@ -35,25 +34,36 @@ const TasksList = () => {
 
   return (
     <Spin spinning={loading}>
-      <Space size={24} wrap={true} style={{ justifyContent: 'center ' }}>
+      <Card>
         {current || taskId === 'new' ? (
           <SingleTask key={current?._id} current={current} />
         ) : (
-          <React.Fragment>
-            {challengeId && <Button onClick={handleCreate}>Create new</Button>}
-            {data?.tasksByChallenge?.map((task: Task) => (
-              <Card
-                key={task._id}
-                title={task.name}
-                onClick={handleClick(task)}>
-                {task.description}
-              </Card>
-            ))}
-          </React.Fragment>
+          <List
+            dataSource={data?.tasksByChallenge ? data?.tasksByChallenge : []}
+            bordered={false}
+            loading={loading}
+            itemLayout="horizontal"
+            header={
+              challengeId && (
+                <Button type="primary" onClick={handleCreate}>
+                  Create new
+                </Button>
+              )
+            }
+            renderItem={(item: Task) => (
+              <List.Item key={item._id} onClick={handleClick(item)}>
+                <Card
+                  key={item._id}
+                  title={item.name}
+                  style={{ width: '100%' }}
+                  size="small"
+                  onClick={handleClick(item)}>
+                  {item.description}
+                </Card>
+              </List.Item>
+            )}
+          />
         )}
-      </Space>
-      <Card>
-        <StepsList />
       </Card>
     </Spin>
   );

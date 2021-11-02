@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { message, Spin, List, Button } from 'antd';
+import { message, Spin, List, Button, Card, Space } from 'antd';
 import { useQuery } from '@apollo/client';
 
 import { TALENT_MANY } from '../../constants/queries';
 
-import styles from './talents.module.less';
 import SingleTalent from './SingleTalent';
 
 const TalentsList = () => {
@@ -29,27 +28,35 @@ const TalentsList = () => {
 
   return (
     <Spin spinning={loading}>
-      <SingleTalent
-        key={current?._id}
-        current={current}
-        onRemove={handleRemove}
-      />
-      <Button onClick={handleCreate}>Create new</Button>
-      <List
-        dataSource={data?.talentMany ? data.talentMany : []}
-        bordered={false}
-        loading={loading}
-        itemLayout="horizontal"
-        size="small"
-        renderItem={(item: Talent) => (
-          <List.Item
-            key={item._id}
-            className={styles.talentItem}
-            onClick={handleClick(item)}>
-            <List.Item.Meta title={<b>{item.name}</b>} description={item.tag} />
-          </List.Item>
-        )}
-      />
+      <Space align="start" style={{ width: '100%' }}>
+        <Card>
+          <SingleTalent
+            key={current?._id}
+            current={current}
+            onRemove={handleRemove}
+          />
+        </Card>
+        <Card>
+          <List
+            dataSource={data?.talentMany ? data.talentMany : []}
+            bordered={false}
+            loading={loading}
+            itemLayout="horizontal"
+            header={
+              <Button type="primary" onClick={handleCreate}>
+                Create new
+              </Button>
+            }
+            renderItem={(item: Talent) => (
+              <List.Item key={item._id} onClick={handleClick(item)}>
+                <Card title={item.name} size="small" style={{ width: '100%' }}>
+                  {item.tag}
+                </Card>
+              </List.Item>
+            )}
+          />
+        </Card>
+      </Space>
     </Spin>
   );
 };

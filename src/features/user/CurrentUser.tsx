@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { Avatar, Checkbox, List, message, Space, Spin } from 'antd';
-import { CheckboxValueType } from 'antd/lib/checkbox/Group';
+import { Avatar, Card, Divider, List, message, Space, Spin } from 'antd';
 
 import { CURRENT_USER, ADD_TALENTS } from '../../constants/queries';
+import UserForm from './UserForm';
+import TalentsSelect from '../../components/TalentsSelect/TalentsSelect';
 
 type User = {
   _id: string;
@@ -29,38 +30,47 @@ const CurrentUser = () => {
     if (error) message.error(error.message);
   }, [error]);
 
-  const handleChange = (values: CheckboxValueType[]) => {
-    addTalents({ variables: { talentsIds: values } });
+  const handleChange = (talents: Talent[]) => {
+    addTalents({
+      variables: { talentsIds: talents.map((talent) => talent._id) },
+    });
   };
 
   return (
     <Spin spinning={loading}>
-      <List
-        dataSource={data?.me ? [data.me] : []}
-        bordered
-        loading={loading}
-        renderItem={(item: User) => (
-          <List.Item key={item._id} style={{ minWidth: 450 }}>
-            <List.Item.Meta
-              avatar={
-                <Avatar src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" />
-              }
-              title={<b>{item.login}</b>}
-              description={
-                <Space direction="vertical" wrap={true}>
-                  {`${item.firstName} ${item.secondName}`}
-                  <Checkbox.Group
-                    onChange={handleChange}
-                    defaultValue={Object.keys(data?.me?.talents)}>
-                    {data?.talentMany?.map((talent: Talent) => (
-                      <Checkbox value={talent._id}>{talent.name}</Checkbox>
-                    ))}
-                  </Checkbox.Group>
-                </Space>
-              }></List.Item.Meta>
-          </List.Item>
-        )}
-      />
+      <Space direction="vertical">
+        <Card>
+          <List
+            dataSource={data?.me ? [data.me] : []}
+            bordered={false}
+            loading={loading}
+            size="small"
+            renderItem={(item: User) => (
+              <List.Item key={item._id} style={{ minWidth: 450 }}>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png" />
+                  }
+                  title={<b>{item.login}</b>}
+                  description={
+                    <Space direction="vertical">
+                      {`${item.firstName} ${item.secondName}`}
+                      <Divider />
+                      <TalentsSelect
+                        talents={data?.talentMany}
+                        selectedIds={Object.keys(item.talents)}
+                        onFinish={handleChange}></TalentsSelect>
+                    </Space>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        </Card>
+        <Card>
+          <UserForm />
+        </Card>
+      </Space>
     </Spin>
   );
 };

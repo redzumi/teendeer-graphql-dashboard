@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, message, Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
@@ -22,13 +22,11 @@ const Challenges = () => {
 
   return (
     <Spin spinning={loading}>
-      <Card>
-        {current || challengeId === 'new' ? (
-          <SingleChallenge key={current?._id} current={current} />
-        ) : (
-          <ChallengesList challenges={data?.challengeMany} />
-        )}
-      </Card>
+      {current || challengeId === 'new' ? (
+        <SingleChallenge key={current?._id} current={current} />
+      ) : (
+        <ChallengesList challenges={data?.challengeMany} />
+      )}
     </Spin>
   );
 };

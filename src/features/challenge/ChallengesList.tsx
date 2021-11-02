@@ -20,18 +20,22 @@ const ChallengesList = ({ challenges }: Props) => {
   return (
     <Space
       size={24}
-      wrap={true}
       align="center"
+      direction="vertical"
       style={{ justifyContent: 'center ' }}>
-      {challenges?.map((challenge: Challenge) => (
-        <Card
-          key={challenge._id}
-          title={challenge.name}
-          onClick={handleClick(challenge)}>
-          {challenge.description}
-        </Card>
-      ))}
-      <Button onClick={handleCreate}>Create new</Button>
+      <Button type="primary" onClick={handleCreate}>
+        Create new challenge
+      </Button>
+      <Space>
+        {challenges?.map((challenge: Challenge) => (
+          <Card
+            key={challenge._id}
+            title={challenge.name}
+            onClick={handleClick(challenge)}>
+            {challenge.description}
+          </Card>
+        ))}
+      </Space>
     </Space>
   );
 };

@@ -33,16 +33,25 @@ const StepsList = () => {
 
   return (
     <Spin spinning={loading}>
-      <Space size={24} wrap={true} style={{ justifyContent: 'center ' }}>
+      <Space
+        direction="vertical"
+        size={24}
+        wrap={true}
+        style={{ justifyContent: 'center ' }}>
         {current || stepId === 'new' ? (
           <SingleStep key={current?._id} current={current} />
         ) : (
           <React.Fragment>
-            {taskId && <Button onClick={handleCreate}>Create new</Button>}
+            {taskId && (
+              <Button type="primary" onClick={handleCreate}>
+                Create new step
+              </Button>
+            )}
             {data?.stepsByTask?.map((step: Step) => (
               <Card
                 key={step._id}
                 title={step.name}
+                size="small"
                 onClick={handleClick(step)}>
                 {step.description}
               </Card>

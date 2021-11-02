@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tag } from 'antd';
+import { Space, Tag } from 'antd';
 
 const { CheckableTag } = Tag;
 
@@ -35,13 +35,13 @@ const TalentsSelect = ({ talents, selectedIds = [], onFinish }: Props) => {
   };
 
   return (
-    <React.Fragment>
+    <Space wrap={true}>
       {talents?.map((talent) => {
         if (onFinish) {
           return (
             <CheckableTag
               key={talent._id}
-              style={{ padding: 16 }}
+              style={{ padding: 8, border: `1px dashed #520339` }}
               checked={selectedTalents.indexOf(talent) > -1}
               onChange={(checked) => handleSelect(talent, checked)}>
               {talent.name}
@@ -55,7 +55,7 @@ const TalentsSelect = ({ talents, selectedIds = [], onFinish }: Props) => {
           </Tag>
         );
       })}
-    </React.Fragment>
+    </Space>
   );
 };
 
