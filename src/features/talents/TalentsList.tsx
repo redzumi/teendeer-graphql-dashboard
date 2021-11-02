@@ -23,9 +23,17 @@ const TalentsList = () => {
     setCurrent(undefined);
   };
 
+  const handleRemove = () => {
+    setCurrent(undefined);
+  };
+
   return (
     <Spin spinning={loading}>
-      <SingleTalent key={current?._id} current={current} />
+      <SingleTalent
+        key={current?._id}
+        current={current}
+        onRemove={handleRemove}
+      />
       <Button onClick={handleCreate}>Create new</Button>
       <List
         dataSource={data?.talentMany ? data.talentMany : []}

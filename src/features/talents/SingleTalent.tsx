@@ -8,13 +8,15 @@ import {
   CREATE_TALENT,
   TALENT_MANY,
   UPDATE_TALENT,
+  TALENT_REMOVE,
 } from '../../constants/queries';
 
 type Props = {
   current?: Talent;
+  onRemove?: () => void;
 };
 
-const SingleTalent = ({ current }: Props) => {
+const SingleTalent = ({ current, onRemove }: Props) => {
   const [form] = useForm<Talent>();
 
   const [updateTalent, { loading: updateLoading }] = useMutation(
@@ -30,6 +32,22 @@ const SingleTalent = ({ current }: Props) => {
       refetchQueries: [{ query: TALENT_MANY }],
     }
   );
+
+  const [removeTalent, { loading: removeLoading }] = useMutation(
+    TALENT_REMOVE,
+    {
+      refetchQueries: [{ query: TALENT_MANY }],
+    }
+  );
+
+  const handleRemove = () => {
+    removeTalent({
+      variables: {
+        talentId: current?._id,
+      },
+      update: onRemove
+    });
+  };
 
   const handleSubmit = () => {
     const record = form.getFieldsValue();
@@ -51,7 +69,7 @@ const SingleTalent = ({ current }: Props) => {
   };
 
   return (
-    <Spin spinning={updateLoading || createLoading}>
+    <Spin spinning={updateLoading || createLoading || removeLoading}>
       <Form name="form" form={form} initialValues={current}>
         <FormItem name="name" label="Talent name">
           <Input />
@@ -62,6 +80,11 @@ const SingleTalent = ({ current }: Props) => {
         <Button onClick={handleSubmit}>
           {current ? 'Update talent' : 'Create talent'}
         </Button>
+        {current && (
+          <Button onClick={handleRemove} type="dashed" danger>
+            Remove talent
+          </Button>
+        )}
       </Form>
     </Spin>
   );

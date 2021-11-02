@@ -142,3 +142,10 @@ export const ADD_TALENTS = gql`
     }
   }
 `;
+
+export const TALENT_REMOVE = gql`
+mutation talentRemove($talentId: MongoID!) {
+  talentRemoveById(_id: $talentId) {
+    recordId
+  }
+}`;
