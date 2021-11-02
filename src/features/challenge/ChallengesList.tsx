@@ -4,10 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 type Props = {
   challenges: Challenge[];
-  canCreate?: boolean;
 };
 
-const ChallengesList = ({ challenges, canCreate }: Props) => {
+const ChallengesList = ({ challenges }: Props) => {
   const history = useHistory();
 
   const handleClick = (challenge: Challenge) => () => {
@@ -32,7 +31,7 @@ const ChallengesList = ({ challenges, canCreate }: Props) => {
           {challenge.description}
         </Card>
       ))}
-      {canCreate && <Button onClick={handleCreate}>Create new</Button>}
+      <Button onClick={handleCreate}>Create new</Button>
     </Space>
   );
 };
