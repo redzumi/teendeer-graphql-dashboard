@@ -40,7 +40,7 @@ const TasksList = () => {
           <SingleTask key={current?._id} current={current} />
         ) : (
           <React.Fragment>
-            {taskId && <Button onClick={handleCreate}>Create new</Button>}
+            {challengeId && <Button onClick={handleCreate}>Create new</Button>}
             {data?.tasksByChallenge?.map((task: Task) => (
               <Card
                 key={task._id}
