@@ -2,31 +2,21 @@ import React, { useEffect } from 'react';
 import { Button, Card, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
-import { CHALLENGE_MANY, TALENT_MANY } from '../../constants/queries';
-import TalentsSelect from './TalentsSelect';
+import {
+  CHALLENGE_MANY,
+  TALENT_MANY,
+  UPDATE_CHALLENGE,
+  CREATE_CHALLENGE,
+} from '../../constants/queries';
+
+import TalentsSelect from '../../components/TalentsSelect/TalentsSelect';
 import TasksList from '../task/TasksList';
 
 type Props = {
   current?: Challenge;
 };
-
-const UPDATE_CHALLENGE = gql`
-  mutation updateChallenge($id: MongoID!, $record: UpdateByIdChallengeInput!) {
-    challengeUpdateById(_id: $id, record: $record) {
-      recordId
-    }
-  }
-`;
-
-const CREATE_CHALLENGE = gql`
-  mutation createChallenge($record: CreateOneChallengeInput!) {
-    challengeCreateOne(record: $record) {
-      recordId
-    }
-  }
-`;
 
 const SingleChallenge = ({ current }: Props) => {
   const { loading: talentsLoading, error, data } = useQuery(TALENT_MANY);

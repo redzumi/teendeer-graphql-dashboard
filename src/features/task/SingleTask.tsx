@@ -2,30 +2,18 @@ import React from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
-import { TASK_BY_CHALLENGE } from '../../constants/queries';
+import {
+  CREATE_TASK,
+  TASK_BY_CHALLENGE,
+  UPDATE_TASK,
+} from '../../constants/queries';
 import { useParams } from 'react-router-dom';
 
 type Props = {
   current?: Task;
 };
-
-const UPDATE_TASK = gql`
-  mutation updateTask($id: MongoID!, $record: UpdateByIdTaskInput!) {
-    taskUpdateById(_id: $id, record: $record) {
-      recordId
-    }
-  }
-`;
-
-const CREATE_TASK = gql`
-  mutation createTask($record: CreateOneTaskInput!) {
-    taskCreateOne(record: $record) {
-      recordId
-    }
-  }
-`;
 
 const SingleTask = ({ current }: Props) => {
   const [form] = useForm<Task>();

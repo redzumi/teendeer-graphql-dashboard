@@ -1,32 +1,9 @@
+import React, { useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { Avatar, Checkbox, List, message, Space, Spin } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import gql from 'graphql-tag';
-import React, { useEffect } from 'react';
 
-const QUERY = gql`
-  query {
-    me {
-      _id
-      login
-      firstName
-      secondName
-      talents
-    }
-    talentMany {
-      _id
-      name
-    }
-  }
-`;
-
-const ADD_TALENTS = gql`
-  mutation addTalents($talentsIds: [String]) {
-    addTalents(talentsIds: $talentsIds) {
-      login
-    }
-  }
-`;
+import { CURRENT_USER, ADD_TALENTS } from '../../constants/queries';
 
 type User = {
   _id: string;
@@ -43,9 +20,9 @@ type Talent = {
 };
 
 const CurrentUser = () => {
-  const { loading, error, data } = useQuery(QUERY);
+  const { loading, error, data } = useQuery(CURRENT_USER);
   const [addTalents] = useMutation(ADD_TALENTS, {
-    refetchQueries: [{ query: QUERY }],
+    refetchQueries: [{ query: CURRENT_USER }],
   });
 
   useEffect(() => {

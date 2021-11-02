@@ -2,7 +2,9 @@ import React from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+
+import { CREATE_USER } from '../../constants/queries';
 
 type User = {
   firstName: String;
@@ -13,18 +15,6 @@ type User = {
     default: [];
   };
 };
-
-const CREATE_USER = gql`
-  mutation userCreateOne($record: CreateOneUserInput!) {
-    userCreateOne(record: $record) {
-      record {
-        login
-        firstName
-        secondName
-      }
-    }
-  }
-`;
 
 const UserForm = () => {
   const [createUser, { loading }] = useMutation(CREATE_USER);

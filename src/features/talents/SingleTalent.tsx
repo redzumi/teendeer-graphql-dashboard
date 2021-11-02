@@ -2,29 +2,17 @@ import React from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
-import { TALENT_MANY } from '../../constants/queries';
+import {
+  CREATE_TALENT,
+  TALENT_MANY,
+  UPDATE_TALENT,
+} from '../../constants/queries';
 
 type Props = {
   current?: Talent;
 };
-
-const UPDATE_TALENT = gql`
-  mutation updateTalent($id: MongoID!, $record: UpdateByIdTalentInput!) {
-    talentUpdateById(_id: $id, record: $record) {
-      recordId
-    }
-  }
-`;
-
-const CREATE_TALENT = gql`
-  mutation createTalent($record: CreateOneTalentInput!) {
-    talentCreateOne(record: $record) {
-      recordId
-    }
-  }
-`;
 
 const SingleTalent = ({ current }: Props) => {
   const [form] = useForm<Talent>();

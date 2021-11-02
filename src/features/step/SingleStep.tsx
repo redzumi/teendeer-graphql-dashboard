@@ -2,30 +2,18 @@ import React from 'react';
 import { Button, Form, Input, message, Spin } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
-import { STEP_BY_TASK } from '../../constants/queries';
+import {
+  CREATE_STEP,
+  STEP_BY_TASK,
+  UPDATE_STEP,
+} from '../../constants/queries';
 import { useParams } from 'react-router-dom';
 
 type Props = {
   current?: Step;
 };
-
-const UPDATE_STEP = gql`
-  mutation updateStep($id: MongoID!, $record: UpdateByIdStepInput!) {
-    stepUpdateById(_id: $id, record: $record) {
-      recordId
-    }
-  }
-`;
-
-const CREATE_STEP = gql`
-  mutation createStep($record: CreateOneStepInput!) {
-    stepCreateOne(record: $record) {
-      recordId
-    }
-  }
-`;
 
 const SingleStep = ({ current }: Props) => {
   const [form] = useForm<Step>();
