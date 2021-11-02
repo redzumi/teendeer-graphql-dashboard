@@ -1,11 +1,9 @@
 import React from 'react';
 import { Divider } from 'antd';
 
-import UserForm from '../../features/user/UserForm';
 import CurrentUser from '../../features/user/CurrentUser';
-import LastNote from '../../features/notes/LastNote';
-import NotesList from '../../features/notes/NotesList';
-import Note from '../../features/notes/Note';
+import TalentsList from '../../features/talents/TalentsList';
+import ChallengesList from '../../features/challenge/ChallengesList';
 
 import './App.less';
 
@@ -19,13 +17,10 @@ function App() {
       </header>
       <div className="App-body">
         <CurrentUser />
-        <UserForm />
         <Divider plain={true} />
-        <Note />
-        <Divider />
-        <LastNote />
-        <Divider />
-        <NotesList />
+        <TalentsList />
+        <Divider plain={true} />
+        <ChallengesList />
       </div>
     </div>
   );

@@ -10,8 +10,7 @@ import { bootstrap } from './vendors';
 
 import './index.less';
 
-// https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTcxOTFiMmIwNmY2MzcxYzBlNjBkMGIiLCJuYW1lIjoiVGVzdHVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.ilxpD1z0KMj63-iDfFNrU9NYKpkOzBjFf4-ihJZgC1s
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTcxOTFiMmIwNmY2MzcxYzBlNjBkMGIiLCJuYW1lIjoiVGVzdHVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.ilxpD1z0KMj63-iDfFNrU9NYKpkOzBjFf4-ihJZgC1s';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTc1MGYzNDRhZDEzZjcyZjI1YmZkZGUiLCJuYW1lIjoiVGVzdHVzZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.sIAg7SzptNB0qzzdQi2NZTte3ciGu4A2ASYVMhH5kSM';
 const wsLink = new WebSocketLink({
   uri: 'ws://localhost:4000/graphql',
   options: {
