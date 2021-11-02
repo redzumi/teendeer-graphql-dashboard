@@ -1,11 +1,7 @@
 import React from 'react';
-import { Divider } from 'antd';
-
-import CurrentUser from '../../features/user/CurrentUser';
-import TalentsList from '../../features/talents/TalentsList';
-import ChallengesList from '../../features/challenge/ChallengesList';
 
 import './App.less';
+import Routes from '../Routes/Routes';
 
 function App() {
   return (
@@ -16,11 +12,7 @@ function App() {
         </p>
       </header>
       <div className="App-body">
-        <CurrentUser />
-        <Divider plain={true} />
-        <TalentsList />
-        <Divider plain={true} />
-        <ChallengesList />
+        <Routes />
       </div>
     </div>
   );

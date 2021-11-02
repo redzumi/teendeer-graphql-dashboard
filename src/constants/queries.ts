@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const TALENT_MANY = gql`
-query {
+query talentMany {
   talentMany {
     _id
     name
@@ -17,6 +17,17 @@ query challengeMany {
     name
     description
     talentsIds
+  }
+}
+`;
+
+export const TASK_MANY = gql`
+query taskMany {
+  taskMany {
+    _id
+    name
+    description
+    challengeId
   }
 }
 `;

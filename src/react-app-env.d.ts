@@ -21,3 +21,10 @@ type Challenge = {
   description: string;
   talentsIds: string[];
 };
+
+type Task = {
+  _id: string;
+  name: string;
+  description: string;
+  challenge: string;
+};
